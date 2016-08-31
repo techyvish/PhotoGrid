@@ -1,0 +1,6 @@
+{
+  "host":"http://localhost:3000",
+  "S3AccessKey": "AKIAJ2KV3IBKCTXIDORQ",
+  "S3SecretKey": "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",
+  "S3BucketKey": "vis-photogrid-app"
+}
