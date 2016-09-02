@@ -1,3 +1,6 @@
 node_modules
 build
 builds
+app/config
+builds/client-build
+builds/server-build
