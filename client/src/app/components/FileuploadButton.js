@@ -23,12 +23,6 @@ const styles = {
 
 class FileuploadButton extends Component {
 
-    getInitialState() {
-        return {
-            myFileName: "",
-            myFileHandle: {}
-        };
-    }
 
     constructor(props, context) {
         super(props, context);
@@ -36,16 +30,45 @@ class FileuploadButton extends Component {
         this._handleChange = this._handleChange.bind(this);
         this._openFileDialog = this._openFileDialog.bind(this);
         this._handleSubmit = this._handleSubmit.bind(this);
-        this.hostName = `http://${window.location.hostname}:3000`;
+        this._handleUploadStatus = this._handleUploadStatus.bind(this);
+        this._handleSocketConnected =  this._handleSocketConnected.bind(this);
+        this._handleDoUpdate = this._handleDoUpdate.bind(this);
+
         this.axios = axios.create({
-            baseURL: this.hostName,
+            baseURL: this.props.hostname,
             timeout: 1000,
             headers: {'X-Custom-Header': 'foobar'}
         });
+
+
+        this.state = {
+            myFileName: "",
+            myFileHandle: {}
+        }
+
+    }
+
+    componentDidMount(){
+        var socket = this.props.socket;
+        socket.on('connect',this._handleSocketConnected);
+        socket.on('status',this._handleUploadStatus);
+        socket.on('doUpdate',this._handleDoUpdate);
     }
 
     handleSave(){
         console.log('Hey tapped');
+    }
+
+    _handleDoUpdate(){
+
+    }
+
+    _handleUploadStatus(data){
+
+    }
+
+    _handleSocketConnected(data){
+        console.log('Socket connected')
     }
 
     _handleSubmit(e) {
@@ -102,7 +125,6 @@ class FileuploadButton extends Component {
         //     .catch(function (err) {
         //         console.log(err);
         //     });
-        debugger;
         console.log("handleChange() fileName = " + event.target.files[0].name);
         console.log("handleChange() file handle = " + event.target.files[0]);
         this.setState({
@@ -163,6 +185,7 @@ class FileuploadButton extends Component {
                         {/*<input  className="upload-file" type="file" onChange={this._handleChange} id="profilePhotoFileUpload" />*/}
                         {/*<input  type="submit" value="Post" />*/}
                     {/*</form>*/}
+
                 </RaisedButton>
             </div>
         );

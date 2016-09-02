@@ -12,14 +12,23 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import NavigationBar from './components/NavigationBar'
 import FileuploadButton from './components/FileuploadButton'
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+import io from 'socket.io-client';
 
 
+
+const hostname = `http://${window.location.hostname}:3000`;
+const socket = io(hostname, {});
 
 const styles = {
   container: {
     //textAlign: 'center',
     paddingTop: 0,
   },
+
+  toolBarStyle : {
+    position: 'fixed',
+    top: 0,
+  }
 };
 
 const muiTheme = getMuiTheme({
@@ -29,15 +38,19 @@ const muiTheme = getMuiTheme({
 });
 
 class Main extends Component {
+
+
   constructor(props, context) {
     super(props, context);
-
     this.handleRequestClose = this.handleRequestClose.bind(this);
     this.handleTouchTap = this.handleTouchTap.bind(this);
 
     this.state = {
       open: false,
-    };
+      tilesData: [],
+      theme:muiTheme
+    }
+
   }
 
   handleRequestClose() {
@@ -53,45 +66,30 @@ class Main extends Component {
   }
 
   render() {
-    const standardActions = (
-      <FlatButton
-        label="Ok"
-        primary={true}
-        onTouchTap={this.handleRequestClose}
-      />
-    );
 
     return (
-      <MuiThemeProvider muiTheme={muiTheme}>
-        <div style={styles.container}>
-          {/*<Dialog*/}
-            {/*open={this.state.open}*/}
-            {/*title="Super Secret Password"*/}
-            {/*actions={standardActions}*/}
-            {/*onRequestClose={this.handleRequestClose}*/}
-          {/*>*/}
-            {/*1-2-3-4-5*/}
-          {/*</Dialog>*/}
+        <MuiThemeProvider muiTheme={muiTheme}>
 
-          <NavigationBar/>
-          <Toolbar>
-            <ToolbarGroup>
-            </ToolbarGroup>
-            <ToolbarGroup>
-              <ToolbarSeparator />
-              <FileuploadButton/>
-            </ToolbarGroup>
-          </Toolbar>
+          <div style={{position:'fixed', width: '100%'}}>
 
-          {/*<h1>Material-UI</h1>*/}
-          {/*<h2>example project</h2>*/}
-          {/*<RaisedButton*/}
-            {/*label="Super Secret Password"*/}
-            {/*secondary={true}*/}
-            {/*onTouchTap={this.handleTouchTap}*/}
-          {/*/>*/}
-        </div>
-      </MuiThemeProvider>
+            <div style={{position:'absolute', width: '100%',  top: '128px', overflowY: 'auto'}}>
+              {React.cloneElement(this.props.children, { muiTheme: muiTheme })}
+            </div>
+
+            <NavigationBar style={{position:'fixed', width: '100%'}}/>
+
+            <Toolbar>
+              <ToolbarGroup>
+              </ToolbarGroup>
+              <ToolbarGroup>
+                <ToolbarSeparator />
+                <FileuploadButton hostname={hostname} socket={socket} />
+              </ToolbarGroup>
+            </Toolbar>
+
+          </div>
+
+        </MuiThemeProvider>
     );
   }
 }

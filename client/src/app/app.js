@@ -3,6 +3,7 @@ var ReactDOM = require('react-dom');
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import Main from './Main'; // Our custom react component
 var { Route, Router, IndexRoute, hashHistory } = require('react-router'); // Object destructing syntex
+import PhotoGridContainer from './components/PhotoGridContainer'
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
@@ -17,7 +18,7 @@ ReactDOM.render(
         <Route path="/" component={Main}>
             {/*<Route path="about" component={About}/>*/}
             {/*<Route path="examples" component={Examples}/>*/}
-            {/*<IndexRoute component={Weather}/>*/}
+            <IndexRoute component={PhotoGridContainer}/>
         </Route>
     </Router>,
     document.getElementById('app')

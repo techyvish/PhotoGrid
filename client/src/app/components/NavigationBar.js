@@ -30,13 +30,10 @@ class NavigationBar extends Component {
     render() {
         var appTitle = 'Photos'
         return (
-            <header>
-                <AppBar
-                    style={styles.container}
-                    title={appTitle}
-                    iconElementRight={<FlatButton label="Save"  onTouchTap={ this.handleSave } />}
-                />
-            </header>
+            <AppBar
+                style={styles.container}
+                title={appTitle}
+            />
         );
     }
 
