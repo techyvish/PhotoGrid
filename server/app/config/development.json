@@ -1,7 +1,0 @@
-{
-  "host":"http://localhost:3000",
-  "S3AccessKey": "AKIAJ2KV3IBKCTXIDORQ",
-  "S3SecretKey": "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",
-  "S3BucketKey": "vis-photogrid-app",
-  "dbURL":"mongodb://photogrid:test123@ds019756.mlab.com:19756/vish-photogrid-app"
-}
